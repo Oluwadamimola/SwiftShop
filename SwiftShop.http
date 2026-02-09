@@ -1,0 +1,6 @@
+@SwiftShop_HostAddress = http://localhost:5280
+
+GET {{SwiftShop_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
