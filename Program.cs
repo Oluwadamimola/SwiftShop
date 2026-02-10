@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SwiftShop.Data;
+using SwiftShop.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,17 +11,22 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
 
+app.MapControllers();
 
 app.Run();
-
-
